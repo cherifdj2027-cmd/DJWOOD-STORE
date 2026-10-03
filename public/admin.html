@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>DJ WOOD | إدارة المتجر</title>
+<style>
+:root{font-family:Tahoma,Arial,sans-serif;color:#251d17;background:#f6f2ed;--brown:#5b351f;--gold:#b78a5a;--line:#e7ddd3;--muted:#766b62;--white:#fff;--red:#a33b30;--green:#286442}*{box-sizing:border-box}body{margin:0}header{background:#382317;color:#fff;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}header strong{font-size:18px}header span{color:#e5d7c8;font-size:12px}.wrap{max-width:1280px;margin:24px auto;padding:0 16px}.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px;box-shadow:0 8px 28px #3523160c}.login{max-width:440px;margin:8vh auto}.field{display:grid;gap:7px;margin:13px 0}.field label{font-size:13px;color:#59493d}.field input,.toolbar input,select{font:inherit;border:1px solid var(--line);border-radius:9px;padding:11px;background:#fff;min-width:0}.btn{border:0;border-radius:9px;padding:10px 15px;background:var(--brown);color:#fff;font:inherit;cursor:pointer}.btn:disabled{opacity:.5;cursor:wait}.btn.light{background:#f2e9df;color:var(--brown);border:1px solid var(--line)}.error{color:var(--red);font-size:13px;min-height:20px}.muted{color:var(--muted);font-size:12px;line-height:1.7}.hidden{display:none!important}.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:15px}.toolbar input{flex:1;min-width:190px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px}.stat span{display:block;color:var(--muted);font-size:12px}.stat b{display:block;font-size:24px;margin-top:5px}.section{margin-top:18px}.section h2{font-size:17px;margin:0 0 12px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:760px;background:#fff}th,td{padding:11px 10px;border-bottom:1px solid #eee7e0;text-align:right;vertical-align:middle;font-size:12px}th{background:#faf7f3;color:#5d4c40;white-space:nowrap}td small{display:block;color:var(--muted);margin-top:4px}.status{display:inline-block;padding:4px 8px;border-radius:30px;background:#f2e9df;color:#5b351f;font-size:11px}.row-actions{display:flex;gap:6px;align-items:center}.row-actions select{min-width:125px;padding:7px;font-size:12px}.empty{padding:24px;text-align:center;color:var(--muted)}.footer-note{margin:20px 0;color:var(--muted);font-size:11px;line-height:1.8}@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.wrap{margin:14px auto;padding:0 10px}.panel{padding:13px}header{padding:13px 14px}header strong{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div><strong>DJ WOOD</strong><div><span>لوحة الإدارة المركزية للمتجر والطلبات</span></div></div><div class="row-actions"><span id="connection">غير مسجل الدخول</span><button id="logout" class="btn light hidden" type="button">تسجيل الخروج</button></div></header>
+<main class="wrap">
+<section id="loginPanel" class="panel login">
+<h1 style="font-size:20px;margin:0 0 5px">تسجيل دخول المدير</h1><p class="muted">هذه الصفحة تعرض الطلبات والمخزون المحفوظين في الخادم المركزي. بيانات الدخول لا تُحفظ في المتصفح.</p>
+<form id="loginForm"><div class="field"><label for="username">اسم المستخدم</label><input id="username" name="username" autocomplete="username" required value="admin"></div><div class="field"><label for="password">كلمة المرور</label><input id="password" name="password" type="password" autocomplete="current-password" required></div><button id="loginButton" class="btn" type="submit" style="width:100%">دخول</button><div id="loginError" class="error" role="alert"></div></form>
+</section>
+<section id="dashboard" class="hidden">
+<div class="toolbar"><button id="refresh" class="btn" type="button">تحديث البيانات</button><input id="orderSearch" placeholder="ابحث برقم الطلب أو اسم العميل أو الهاتف"><span id="lastUpdated" class="muted"></span></div>
+<div class="stats"><div class="stat"><span>إجمالي الطلبات</span><b id="statOrders">0</b></div><div class="stat"><span>طلبات جديدة</span><b id="statNew">0</b></div><div class="stat"><span>قيد التجهيز</span><b id="statPreparing">0</b></div><div class="stat"><span>مقاسات نفد مخزونها</span><b id="statOut">0</b></div></div>
+<section class="section panel"><h2>طلبات العملاء</h2><div class="table-wrap"><table><thead><tr><th>رقم الطلب / التاريخ</th><th>العميل</th><th>المنتجات</th><th>الإجمالي</th><th>الدفع</th><th>الحالة</th><th>تحديث الحالة</th></tr></thead><tbody id="ordersBody"><tr><td colspan="7" class="empty">جارٍ التحميل…</td></tr></tbody></table></div></section>
+<section class="section panel"><h2>المخزون المتاح</h2><div class="table-wrap"><table><thead><tr><th>المنتج</th><th>المقاس</th><th>SKU</th><th>الموجود</th><th>محجوز</th><th>المتاح</th><th>الوحدة</th></tr></thead><tbody id="productsBody"><tr><td colspan="7" class="empty">جارٍ التحميل…</td></tr></tbody></table></div></section>
+<p class="footer-note">يتم حجز الكمية عند وصول الطلب. عند إلغاء الطلب يُحرر الحجز، وعند تسجيل التسليم تُخصم الكمية من المخزون. لا تحذف الطلبات؛ استخدم تغيير الحالة للحفاظ على سجل حركة المخزون.</p>
+<div id="dashboardError" class="error" role="alert"></div>
+</section>
+</main>
+<script>
+(()=>{
+'use strict';
+const API='/api/v1',TOKEN='DJ_WOOD_AUTH_TOKEN_V1';
+const $=id=>document.getElementById(id);
+const state={orders:[],products:[],busy:false};let memoryToken='';
+const labels={draft:'مسودة',sent:'طلب جديد',under_review:'قيد المراجعة',confirmed:'مؤكد',preparing:'قيد التجهيز',ready:'جاهز',delivered:'تم التسليم',completed:'مكتمل',cancelled:'ملغى',due_on_delivery:'مستحق عند الاستلام',paid:'مدفوع',not_started:'لم يبدأ',pending:'بانتظار الدفع',failed:'فشل الدفع',refunded:'مسترد'};
+const transitions={draft:['sent','cancelled'],sent:['under_review','cancelled'],under_review:['confirmed','cancelled'],confirmed:['preparing','cancelled'],preparing:['ready','cancelled'],ready:['delivered','cancelled'],delivered:['completed'],completed:[],cancelled:[]};
+const number=n=>new Intl.NumberFormat('ar-DZ',{maximumFractionDigits:3}).format(Math.max(0,Number(n)||0));
+const money=n=>number(n)+' دج';
+const token=()=>{try{return sessionStorage.getItem(TOKEN)||'';}catch(_){return memoryToken;}};
+function saveToken(value){memoryToken=String(value||'');try{if(memoryToken)sessionStorage.setItem(TOKEN,memoryToken);else sessionStorage.removeItem(TOKEN);}catch(_){}}
+function clearToken(){memoryToken='';try{sessionStorage.removeItem(TOKEN);}catch(_){}}
+function setMessage(id,message){$(id).textContent=message||'';}
+async function api(path,options={}){
+ const headers={Accept:'application/json',...(options.headers||{})};
+ if(options.body!==undefined)headers['Content-Type']='application/json';
+ if(token())headers.Authorization='Bearer '+token();
+ const response=await fetch(API+path,{...options,headers,cache:'no-store'});
+ const payload=await response.json().catch(()=>null);
+ if(!response.ok||!payload?.ok){const e=new Error(payload?.error?.message||'تعذر تنفيذ العملية.');e.status=response.status;e.code=payload?.error?.code;e.payload=payload;throw e;}
+ return payload.data;
+}
+function showDashboard(){ $('loginPanel').classList.add('hidden');$('dashboard').classList.remove('hidden');$('logout').classList.remove('hidden');$('connection').textContent='متصل بالخادم'; }
+function showLogin(){ $('dashboard').classList.add('hidden');$('loginPanel').classList.remove('hidden');$('logout').classList.add('hidden');$('connection').textContent='غير مسجل الدخول'; }
+async function login(event){event.preventDefault();if(state.busy)return;state.busy=true;$('loginButton').disabled=true;setMessage('loginError','');try{const data=await api('/auth/login',{method:'POST',body:JSON.stringify({username:$('username').value.trim(),password:$('password').value})});saveToken(data.token);$('password').value='';await api('/auth/me');state.busy=false;showDashboard();await loadAll();}catch(e){setMessage('loginError',e.message);}finally{state.busy=false;$('loginButton').disabled=false;}}
+async function logout(){try{await api('/auth/logout',{method:'POST',body:'{}'});}catch(_){}clearToken();state.orders=[];state.products=[];showLogin();}
+async function loadAll(){if(state.busy)return;state.busy=true;$('refresh').disabled=true;setMessage('dashboardError','');try{const [orders,products]=await Promise.all([api('/orders'),api('/products')]);state.orders=Array.isArray(orders)?orders:[];state.products=Array.isArray(products)?products:[];render();$('lastUpdated').textContent='آخر تحديث: '+new Date().toLocaleTimeString('ar-DZ');}catch(e){setMessage('dashboardError',e.status===401?'انتهت جلسة الدخول. سجّل الدخول مجددًا.':e.message);if(e.status===401){clearToken();showLogin();}}finally{state.busy=false;$('refresh').disabled=false;}}
+function cell(row,value){const td=document.createElement('td');td.textContent=value??'—';row.appendChild(td);return td;}
+function render(){
+ const q=$('orderSearch').value.trim().toLowerCase();const filtered=state.orders.filter(o=>{const c=o.customer||{};return [o.reference,c.name,c.phone].join(' ').toLowerCase().includes(q);});
+ $('statOrders').textContent=state.orders.length;$('statNew').textContent=state.orders.filter(o=>['sent','under_review'].includes(o.status)).length;$('statPreparing').textContent=state.orders.filter(o=>['confirmed','preparing','ready'].includes(o.status)).length;
+ const variants=state.products.flatMap(p=>(Array.isArray(p.variants)&&p.variants.length?p.variants:[p]).map(v=>({p,v})));$('statOut').textContent=variants.filter(({p,v})=>v.status!=='inactive'&&Math.max(0,(Number(v.q)||0)-(Number(v.reservedQty)||0))<=0).length;
+ const ob=$('ordersBody');ob.replaceChildren();if(!filtered.length){const tr=document.createElement('tr');const td=cell(tr,'لا توجد طلبات مطابقة.');td.colSpan=7;td.className='empty';ob.appendChild(tr);}
+ for(const order of filtered){const tr=document.createElement('tr'),c=order.customer||{};const ref=cell(tr,order.reference);const date=document.createElement('small');date.textContent=new Date(order.createdAt||Date.now()).toLocaleString('ar-DZ');ref.appendChild(date);const customer=cell(tr,c.name||'—');const phone=document.createElement('small');phone.textContent=c.phone||'';customer.appendChild(phone);cell(tr,(order.lines||[]).map(x=>`${x.name||'منتج'} (${x.quantity} ${x.unit==='piece'?'قطعة':x.unit==='m2'?'m²':'m³'})`).join('، '));cell(tr,money(order.estimatedTotal));const payment=cell(tr,labels[order.paymentStatus]||order.paymentStatus||'—');payment.appendChild(document.createElement('small')).textContent=order.paymentMethod==='cod'?'الدفع عند الاستلام':'الدفع الإلكتروني';const status=cell(tr,'');const badge=document.createElement('span');badge.className='status';badge.textContent=labels[order.status]||order.status;status.appendChild(badge);const actions=cell(tr,'');const wrap=document.createElement('div');wrap.className='row-actions';const select=document.createElement('select');const choices=transitions[order.status]||[];const current=document.createElement('option');current.value='';current.textContent='تغيير الحالة…';select.appendChild(current);for(const next of choices){const option=document.createElement('option');option.value=next;option.textContent=labels[next]||next;select.appendChild(option);}select.disabled=!choices.length;const button=document.createElement('button');button.className='btn';button.type='button';button.textContent='حفظ';button.disabled=!choices.length;button.addEventListener('click',()=>updateOrder(order,select,button));wrap.append(select,button);actions.appendChild(wrap);ob.appendChild(tr);}
+ const pb=$('productsBody');pb.replaceChildren();let count=0;for(const product of state.products){const list=Array.isArray(product.variants)&&product.variants.length?product.variants:[product];for(const variant of list){count++;const tr=document.createElement('tr');cell(tr,product.name);cell(tr,variant.name||'الأساسي');cell(tr,variant.sku||product.sku||'—');const q=Number(variant.q)||0,r=Number(variant.reservedQty)||0;cell(tr,number(q));cell(tr,number(r));cell(tr,number(Math.max(0,q-r)));cell(tr,variant.unit==='piece'?'قطعة':variant.unit==='m2'?'m²':'m³');pb.appendChild(tr);}}
+ if(!count){const tr=document.createElement('tr');const td=cell(tr,'لا توجد منتجات في الكتالوج المركزي. استورد منتجات المتجر أولًا.');td.colSpan=7;td.className='empty';pb.appendChild(tr);}
+}
+async function updateOrder(order,select,button){const next=select.value;if(!next)return;button.disabled=true;setMessage('dashboardError','');const updated={...order,status:next,statusHistory:[...(order.statusHistory||[]),{from:order.status,to:next,at:new Date().toISOString()}]};try{await api('/orders',{method:'POST',headers:{'If-Match':String(order.version||1)},body:JSON.stringify(updated)});await loadAll();}catch(e){setMessage('dashboardError',e.message);button.disabled=false;}}
+$('loginForm').addEventListener('submit',login);$('logout').addEventListener('click',logout);$('refresh').addEventListener('click',loadAll);$('orderSearch').addEventListener('input',render);
+(async()=>{if(!token())return showLogin();try{await api('/auth/me');showDashboard();await loadAll();}catch(_){clearToken();showLogin();}})();
+})();
+</script>
+</body></html>
